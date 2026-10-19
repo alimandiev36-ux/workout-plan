@@ -74,8 +74,26 @@
 
             <ul id="workout-list" class="workout-list"></ul>
         </section>
+                <!-- Карточка с графиком -->
+        <section class="card">
+            <h2>📈 Прогресс</h2>
+            
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="chart-exercise">Выберите упражнение</label>
+                <select id="chart-exercise">
+                    <option value="">-- Выберите упражнение --</option>
+                </select>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </section>
     </main>
-
+<!-- Подключаем библиотеку для графиков -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Наш скрипт -->
     <script src="app.js"></script>
 </body>
 </html>
