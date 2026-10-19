@@ -29,7 +29,6 @@ main {
     padding: 0 1rem;
 }
 
-/* Карточки */
 .card {
     background: white;
     border-radius: 16px;
@@ -76,14 +75,12 @@ main {
     background: white;
 }
 
-/* Ряд из нескольких полей */
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
 }
 
-/* Кнопка */
 .btn-primary {
     width: 100%;
     padding: 0.9rem;
@@ -105,36 +102,11 @@ main {
 .btn-primary:active {
     transform: translateY(0);
 }
-/* Контейнер для дня недели и кнопки удаления */
-.workout-item-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem; /* Отступ между днем и кнопкой */
-}
 
-/* Кнопка удаления */
-.btn-delete {
-    background: rgba(255, 59, 48, 0.1); /* Бледно-красный фон */
-    color: #ff3b30; /* Красный крестик */
-    border: none;
-    border-radius: 50%; /* Круглая кнопка */
-    width: 32px;
-    height: 32px;
-    cursor: pointer; /* Курсор-рука */
-    font-size: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background 0.2s;
-}
-
-.btn-delete:hover {
-    background: rgba(255, 59, 48, 0.2); /* При наведении фон становится темнее */
-}
-/* Кнопки фильтрации */
+/* --- СТИЛИ ДЛЯ СПИСКА И ФИЛЬТРОВ --- */
 .filter-buttons {
     display: flex;
-    flex-wrap: wrap; /* Позволяет кнопкам переноситься на новую строку на телефонах */
+    flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1.5rem;
 }
@@ -143,7 +115,7 @@ main {
     padding: 0.5rem 1rem;
     border: 1.5px solid #e0e0e0;
     background: white;
-    border-radius: 20px; /* Овальные кнопки */
+    border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 500;
     color: #555;
@@ -156,9 +128,82 @@ main {
     color: #667eea;
 }
 
-/* Активная кнопка (на которую нажали) */
 .filter-btn.active {
     background: #667eea;
     color: white;
     border-color: #667eea;
+}
+
+.workout-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.workout-item {
+    background: #fafafa;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.workout-item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-item-title {
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.workout-item-details {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.workout-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.workout-item-day {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.btn-delete {
+    background: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background: rgba(255, 59, 48, 0.2);
+}
+
+.empty-state {
+    color: #999;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-style: italic;
 }

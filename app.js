@@ -3,9 +3,9 @@ const list = document.getElementById('workout-list');
 const filterButtons = document.getElementById('filter-buttons');
 
 let workouts = JSON.parse(localStorage.getItem('my-workouts')) || [];
-let currentFilter = 'all'; // По умолчанию показываем все
+let currentFilter = 'all'; 
 
-// --- ДОБАВЛЕНИЕ ТРЕНИРОВКИ ---
+// --- ДОБАВЛЕНИЕ ---
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -15,13 +15,7 @@ form.addEventListener('submit', function (event) {
     const weight = document.getElementById('weight').value;
     const day = document.getElementById('day').value;
 
-    const newWorkout = {
-        exercise: exercise,
-        sets: sets,
-        reps: reps,
-        weight: weight,
-        day: day
-    };
+    const newWorkout = { exercise, sets, reps, weight, day };
 
     workouts.push(newWorkout);
     saveToLocalStorage();
@@ -36,17 +30,15 @@ function saveToLocalStorage() {
     localStorage.setItem('my-workouts', JSON.stringify(workouts));
 }
 
-// --- ОТРИСОВКА СПИСКА ---
+// --- ОТРИСОВКА ---
 function renderWorkouts() {
     list.innerHTML = '';
 
-    // 1. Фильтруем массив: оставляем только те тренировки, которые подходят под фильтр
     let filteredWorkouts = workouts;
     if (currentFilter !== 'all') {
         filteredWorkouts = workouts.filter(w => w.day === currentFilter);
     }
 
-    // 2. Если после фильтрации пусто
     if (filteredWorkouts.length === 0) {
         const li = document.createElement('li');
         li.className = 'empty-state';
@@ -55,11 +47,8 @@ function renderWorkouts() {
         return;
     }
 
-    // 3. Рисуем карточки
     for (let i = 0; i < filteredWorkouts.length; i++) {
         const workout = filteredWorkouts[i];
-        
-        // Находим реальный индекс в общем массиве (чтобы удаление работало правильно)
         const originalIndex = workouts.indexOf(workout);
 
         const li = document.createElement('li');
@@ -84,7 +73,6 @@ function renderWorkouts() {
         list.appendChild(li);
     }
 
-    // 4. Вешаем события на кнопки удаления
     const deleteButtons = document.querySelectorAll('.btn-delete');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -101,21 +89,15 @@ function deleteWorkout(index) {
     renderWorkouts();
 }
 
-// --- ФИЛЬТРАЦИЯ (НОВОЕ) ---
+// --- ФИЛЬТРАЦИЯ ---
 filterButtons.addEventListener('click', function(event) {
-    // Проверяем, что кликнули именно по кнопке с классом filter-btn
     if (!event.target.classList.contains('filter-btn')) return;
 
-    // 1. Меняем активный фильтр
     currentFilter = event.target.getAttribute('data-day');
 
-    // 2. Убираем класс 'active' у всех кнопок
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-
-    // 3. Добавляем класс 'active' той кнопке, на которую нажали
     event.target.classList.add('active');
 
-    // 4. Перерисовываем список
     renderWorkouts();
 });
 
