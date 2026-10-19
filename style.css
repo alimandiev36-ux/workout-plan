@@ -1,107 +1,49 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* --- НОВЫЕ СТИЛИ ДЛЯ СПИСКА ТРЕНИРОВОК --- */
+.workout-list {
+    list-style: none; /* Убираем точки у списка */
+    display: flex;
+    flex-direction: column; /* Элементы друг под другом */
+    gap: 0.75rem; /* Расстояние между карточками */
 }
 
-body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background: #f5f5f7;
-    color: #1d1d1f;
-    line-height: 1.5;
+.workout-item {
+    background: #fafafa;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    border-left: 4px solid #667eea; /* Фиолетовая полоска слева */
+    display: flex;
+    justify-content: space-between; /* Разносит текст по краям */
+    align-items: center; /* Центрирует по вертикали */
 }
 
-header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 2rem;
-    text-align: center;
-}
-
-header h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-main {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-
-/* Карточки */
-.card {
-    background: white;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    margin-bottom: 1.5rem;
-}
-
-.card h2 {
-    margin-bottom: 1.25rem;
-    font-size: 1.25rem;
-    color: #1d1d1f;
-}
-
-/* Форма */
-.form-group {
+.workout-item-info {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
 }
 
-.form-group label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #555;
-}
-
-.form-group input,
-.form-group select {
-    padding: 0.7rem 0.9rem;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-family: inherit;
-    background: #fafafa;
-    transition: border-color 0.15s, background 0.15s;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: #667eea;
-    background: white;
-}
-
-/* Ряд из нескольких полей */
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-}
-
-/* Кнопка */
-.btn-primary {
-    width: 100%;
-    padding: 0.9rem;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
+.workout-item-title {
     font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.2s;
+    color: #1d1d1f;
 }
 
-.btn-primary:hover {
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-    transform: translateY(-1px);
+.workout-item-details {
+    font-size: 0.875rem;
+    color: #666;
 }
 
-.btn-primary:active {
-    transform: translateY(0);
+.workout-item-day {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.empty-state {
+    color: #999;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-style: italic;
 }
