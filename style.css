@@ -1,49 +1,26 @@
-/* --- НОВЫЕ СТИЛИ ДЛЯ СПИСКА ТРЕНИРОВОК --- */
-.workout-list {
-    list-style: none; /* Убираем точки у списка */
+/* Контейнер для дня недели и кнопки удаления */
+.workout-item-actions {
     display: flex;
-    flex-direction: column; /* Элементы друг под другом */
-    gap: 0.75rem; /* Расстояние между карточками */
+    align-items: center;
+    gap: 1rem; /* Отступ между днем и кнопкой */
 }
 
-.workout-item {
-    background: #fafafa;
-    padding: 1rem 1.25rem;
-    border-radius: 12px;
-    border-left: 4px solid #667eea; /* Фиолетовая полоска слева */
+/* Кнопка удаления */
+.btn-delete {
+    background: rgba(255, 59, 48, 0.1); /* Бледно-красный фон */
+    color: #ff3b30; /* Красный крестик */
+    border: none;
+    border-radius: 50%; /* Круглая кнопка */
+    width: 32px;
+    height: 32px;
+    cursor: pointer; /* Курсор-рука */
+    font-size: 1rem;
     display: flex;
-    justify-content: space-between; /* Разносит текст по краям */
-    align-items: center; /* Центрирует по вертикали */
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s;
 }
 
-.workout-item-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.workout-item-title {
-    font-weight: 600;
-    color: #1d1d1f;
-}
-
-.workout-item-details {
-    font-size: 0.875rem;
-    color: #666;
-}
-
-.workout-item-day {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    white-space: nowrap;
-}
-
-.empty-state {
-    color: #999;
-    text-align: center;
-    padding: 2rem 1rem;
-    font-style: italic;
+.btn-delete:hover {
+    background: rgba(255, 59, 48, 0.2); /* При наведении фон становится темнее */
 }

@@ -2,22 +2,19 @@
 const form = document.getElementById('workout-form');
 const list = document.getElementById('workout-list');
 
-// 2. Загружаем сохраненные тренировки из памяти браузера
-// Если там ничего нет, создаем пустой массив []
+// 2. Загружаем сохраненные тренировки
 let workouts = JSON.parse(localStorage.getItem('my-workouts')) || [];
 
 // 3. Слушаем отправку формы
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    // Читаем значения
     const exercise = document.getElementById('exercise').value.trim();
     const sets = document.getElementById('sets').value;
     const reps = document.getElementById('reps').value;
     const weight = document.getElementById('weight').value;
     const day = document.getElementById('day').value;
 
-    // Формируем объект тренировки
     const newWorkout = {
         exercise: exercise,
         sets: sets,
@@ -26,67 +23,80 @@ form.addEventListener('submit', function (event) {
         day: day
     };
 
-    // ДОБАВЛЯЕМ тренировку в наш массив (в конец списка)
     workouts.push(newWorkout);
-
-    // СОХРАНЯЕМ обновленный массив в localStorage
     saveToLocalStorage();
-
-    // Отрисовываем список заново
     renderWorkouts();
 
-    // Очищаем форму
     form.reset();
     document.getElementById('exercise').focus();
 });
 
-// 4. Функция сохранения в память
+// 4. Функция сохранения
 function saveToLocalStorage() {
-    // Превращаем массив в текст (JSON) и сохраняем под именем 'my-workouts'
     localStorage.setItem('my-workouts', JSON.stringify(workouts));
 }
 
-// 5. Функция отрисовки всего списка
+// 5. Функция отрисовки списка (С ИЗМЕНЕНИЯМИ)
 function renderWorkouts() {
-    // Очищаем список полностью перед отрисовкой
     list.innerHTML = '';
 
-    // Если тренировок нет, показываем надпись
     if (workouts.length === 0) {
         const li = document.createElement('li');
         li.className = 'empty-state';
         li.textContent = 'Пока нет тренировок. Добавь первую!';
         list.appendChild(li);
-        return; // Выходим из функции, чтобы не рисовать пустоту
+        return;
     }
 
-    // Если тренировки есть, проходимся по каждой (цикл for)
+    // Проходимся по каждой тренировке
     for (let i = 0; i < workouts.length; i++) {
-        const workout = workouts[i]; // Берем одну тренировку
+        const workout = workouts[i];
 
-        // Создаем элемент списка <li>
         const li = document.createElement('li');
         li.className = 'workout-item';
 
-        // Формируем детали
         let details = `${workout.sets} подх. × ${workout.reps} повт.`;
         if (workout.weight) {
             details += `, ${workout.weight} кг`;
         }
 
-        // Заполняем HTML
+        // ОБНОВЛЕННЫЙ HTML: добавили кнопку удаления с data-index
         li.innerHTML = `
             <div class="workout-item-info">
                 <span class="workout-item-title">${workout.exercise}</span>
                 <span class="workout-item-details">${details}</span>
             </div>
-            <span class="workout-item-day">${workout.day}</span>
+            <div class="workout-item-actions">
+                <span class="workout-item-day">${workout.day}</span>
+                <button class="btn-delete" data-index="${i}" title="Удалить">✖</button>
+            </div>
         `;
 
-        // Добавляем на страницу
         list.appendChild(li);
     }
+
+    // 6. НОВОЕ: Находим все кнопки удаления и вешаем на них событие
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Получаем индекс тренировки из атрибута data-index
+            const index = this.getAttribute('data-index');
+            deleteWorkout(index);
+        });
+    });
 }
 
-// 6. При загрузке страницы сразу показываем сохраненные тренировки
+// 7. Функция удаления
+function deleteWorkout(index) {
+    // Удаляем 1 элемент из массива, начиная с позиции index
+    workouts.splice(index, 1);
+    
+    // Сохраняем обновленный массив
+    saveToLocalStorage();
+    
+    // Перерисовываем список
+    renderWorkouts();
+}
+
+// При загрузке страницы
 renderWorkouts();
