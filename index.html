@@ -56,9 +56,22 @@
             </form>
         </section>
 
-        <!-- НОВАЯ карточка со списком тренировок -->
+                <!-- Карточка со списком тренировок -->
         <section class="card">
             <h2>📋 Мои тренировки</h2>
+            
+            <!-- Кнопки фильтрации -->
+            <div id="filter-buttons" class="filter-buttons">
+                <button class="filter-btn active" data-day="all">Все</button>
+                <button class="filter-btn" data-day="Понедельник">Пн</button>
+                <button class="filter-btn" data-day="Вторник">Вт</button>
+                <button class="filter-btn" data-day="Среда">Ср</button>
+                <button class="filter-btn" data-day="Четверг">Чт</button>
+                <button class="filter-btn" data-day="Пятница">Пт</button>
+                <button class="filter-btn" data-day="Суббота">Сб</button>
+                <button class="filter-btn" data-day="Воскресенье">Вс</button>
+            </div>
+
             <ul id="workout-list" class="workout-list"></ul>
         </section>
     </main>
