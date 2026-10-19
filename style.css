@@ -180,6 +180,10 @@ main {
     padding: 0.3rem 0.7rem;
     border-radius: 20px;
     white-space: nowrap;
+    display: flex;
+    flex-direction: column; /* День недели и дата будут друг под другом */
+    align-items: center;
+    line-height: 1.2;
 }
 
 .btn-delete {

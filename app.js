@@ -15,7 +15,10 @@ form.addEventListener('submit', function (event) {
     const weight = document.getElementById('weight').value;
     const day = document.getElementById('day').value;
 
-    const newWorkout = { exercise, sets, reps, weight, day };
+        // Получаем текущую дату в формате ГГГГ-ММ-ДД
+    const today = new Date().toISOString().split('T')[0];
+    
+    const newWorkout = { exercise, sets, reps, weight, day, date: today };
 
     workouts.push(newWorkout);
     saveToLocalStorage();
@@ -65,7 +68,7 @@ function renderWorkouts() {
                 <span class="workout-item-details">${details}</span>
             </div>
             <div class="workout-item-actions">
-                <span class="workout-item-day">${workout.day}</span>
+                <span class="workout-item-day">${workout.day} ${workout.date ? '• ' + workout.date : ''}</span>
                 <button class="btn-delete" data-index="${originalIndex}" title="Удалить">✖</button>
             </div>
         `;
