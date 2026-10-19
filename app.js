@@ -1,21 +1,24 @@
-// 1. Находим элементы на странице по их id
+// 1. Находим элементы на странице
 const form = document.getElementById('workout-form');
 const list = document.getElementById('workout-list');
 
-// 2. Слушаем отправку формы
+// 2. Загружаем сохраненные тренировки из памяти браузера
+// Если там ничего нет, создаем пустой массив []
+let workouts = JSON.parse(localStorage.getItem('my-workouts')) || [];
+
+// 3. Слушаем отправку формы
 form.addEventListener('submit', function (event) {
-    // Отменяем перезагрузку страницы (по умолчанию формы перезагружают страницу)
     event.preventDefault();
 
-    // 3. Читаем значения из полей
+    // Читаем значения
     const exercise = document.getElementById('exercise').value.trim();
     const sets = document.getElementById('sets').value;
     const reps = document.getElementById('reps').value;
     const weight = document.getElementById('weight').value;
     const day = document.getElementById('day').value;
 
-    // 4. Формируем объект тренировки
-    const workout = {
+    // Формируем объект тренировки
+    const newWorkout = {
         exercise: exercise,
         sets: sets,
         reps: reps,
@@ -23,48 +26,67 @@ form.addEventListener('submit', function (event) {
         day: day
     };
 
-    // 5. Добавляем в список, очищаем форму и ставим курсор обратно
-    addWorkoutToList(workout);
+    // ДОБАВЛЯЕМ тренировку в наш массив (в конец списка)
+    workouts.push(newWorkout);
+
+    // СОХРАНЯЕМ обновленный массив в localStorage
+    saveToLocalStorage();
+
+    // Отрисовываем список заново
+    renderWorkouts();
+
+    // Очищаем форму
     form.reset();
     document.getElementById('exercise').focus();
 });
 
-// 6. Функция для создания карточки тренировки
-function addWorkoutToList(workout) {
-    // Убираем надпись "Пока нет тренировок", если она есть
-    const empty = list.querySelector('.empty-state');
-    if (empty) empty.remove();
+// 4. Функция сохранения в память
+function saveToLocalStorage() {
+    // Превращаем массив в текст (JSON) и сохраняем под именем 'my-workouts'
+    localStorage.setItem('my-workouts', JSON.stringify(workouts));
+}
 
-    // Создаем новый элемент списка <li>
-    const li = document.createElement('li');
-    li.className = 'workout-item';
+// 5. Функция отрисовки всего списка
+function renderWorkouts() {
+    // Очищаем список полностью перед отрисовкой
+    list.innerHTML = '';
 
-    // Формируем текст с подходами и весом
-    let details = `${workout.sets} подх. × ${workout.reps} повт.`;
-    if (workout.weight) {
-        details += `, ${workout.weight} кг`;
+    // Если тренировок нет, показываем надпись
+    if (workouts.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'empty-state';
+        li.textContent = 'Пока нет тренировок. Добавь первую!';
+        list.appendChild(li);
+        return; // Выходим из функции, чтобы не рисовать пустоту
     }
 
-    // Заполняем карточку HTML-кодом
-    li.innerHTML = `
-        <div class="workout-item-info">
-            <span class="workout-item-title">${workout.exercise}</span>
-            <span class="workout-item-details">${details}</span>
-        </div>
-        <span class="workout-item-day">${workout.day}</span>
-    `;
+    // Если тренировки есть, проходимся по каждой (цикл for)
+    for (let i = 0; i < workouts.length; i++) {
+        const workout = workouts[i]; // Берем одну тренировку
 
-    // Добавляем готовую карточку в список
-    list.appendChild(li);
+        // Создаем элемент списка <li>
+        const li = document.createElement('li');
+        li.className = 'workout-item';
+
+        // Формируем детали
+        let details = `${workout.sets} подх. × ${workout.reps} повт.`;
+        if (workout.weight) {
+            details += `, ${workout.weight} кг`;
+        }
+
+        // Заполняем HTML
+        li.innerHTML = `
+            <div class="workout-item-info">
+                <span class="workout-item-title">${workout.exercise}</span>
+                <span class="workout-item-details">${details}</span>
+            </div>
+            <span class="workout-item-day">${workout.day}</span>
+        `;
+
+        // Добавляем на страницу
+        list.appendChild(li);
+    }
 }
 
-// 7. Показываем надпись, если тренировок нет
-function showEmptyState() {
-    const li = document.createElement('li');
-    li.className = 'empty-state';
-    li.textContent = 'Пока нет тренировок. Добавь первую!';
-    list.appendChild(li);
-}
-
-// Вызываем функцию при загрузке страницы
-showEmptyState();
+// 6. При загрузке страницы сразу показываем сохраненные тренировки
+renderWorkouts();
